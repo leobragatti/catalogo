@@ -23,10 +23,11 @@ class Album(models.Model):
         return self.name
     
 class Song(models.Model):
+    album = models.ForeignKey(Album)
     name = models.CharField(max_length=256)
     number = models.PositiveSmallIntegerField()
-    length = models.TimeField()
-    lyrics = models.TextField(blank=True)
+    length = models.TimeField(null=True)
+    lyrics = models.TextField(null=True, blank=True)
 
     class Meta:
         db_table = 'Song'
