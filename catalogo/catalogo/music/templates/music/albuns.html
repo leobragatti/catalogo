@@ -1,0 +1,22 @@
+<body>
+	{% if albuns %}
+		<h2>{{albuns|length}} albu{{albuns|pluralize:"m,ns"}} encontrado{{albuns|pluralize}}.</h2>
+        <table>
+        	<tr>
+        		<td>Artista</td>
+        		<td>Album</td>
+        		<td>Ano de lançamento</td>
+        	</tr>
+			{% for album in albuns %}
+				<tr>
+					<td>{{ album.artist }}</td>
+					<td>{{ album.name }}</td>
+					<td>{{ album.year }}</td>
+				</tr>
+			{% endfor %}
+		</table>
+
+	{% else %}
+		<h1>Nenhum album cadastrado</h1>
+	{% endif %}
+</body>
