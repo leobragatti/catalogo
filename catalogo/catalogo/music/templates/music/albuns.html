@@ -2,13 +2,13 @@
 	{% if albuns %}
 		<h2>{{albuns|length}} albu{{albuns|pluralize:"m,ns"}} encontrado{{albuns|pluralize}}.</h2>
         <table>
-        	<tr>
-        		<td>Artista</td>
-        		<td>Album</td>
-        		<td>Ano de lançamento</td>
+        	<tr bgcolor="#0099FF" border=1>
+        		<td><strong>Artista</strong></td>
+        		<td><strong>Album</strong></td>
+        		<td><strong>Ano de lançamento</strong></td>
         	</tr>
 			{% for album in albuns %}
-				<tr>
+				<tr bgcolor="{% cycle '#999999' '#00C0C0' %}">
 					<td>{{ album.artist }}</td>
 					<td>{{ album.name }}</td>
 					<td>{{ album.year }}</td>
