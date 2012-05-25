@@ -9,6 +9,9 @@ from django.http import HttpResponseRedirect
 from django.core.urlresolvers import reverse
 from django.forms.models import inlineformset_factory
 
+def index(request):
+	return render(request, 'music/index.html')
+
 def listar_albuns(request):
 	albuns = Album.objects.all()
 	vars_template = {'albuns': albuns}
