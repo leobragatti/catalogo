@@ -10,9 +10,11 @@
 			{% for album in albuns %}
 				<tr bgcolor="{% cycle '#5c8ea7' '#a8ffea' %}">
 					<td>{{ album.artist }}</td>
-					<td>{{ album.name }}</td>
+					<td><a href="{% url listar_songs album.id %}">{{ album.name }}</a></td>
 					<td>{{ album.year }}</td>
 				</tr>
+				<div id="album{{ album.id }}">
+				</div>
 			{% endfor %}
 		</table>
 
