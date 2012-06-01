@@ -1,20 +1,24 @@
 <body>
 	{% if albuns %}
 		<h2>{{albuns|length}} albu{{albuns|pluralize:"m,ns"}} encontrado{{albuns|pluralize}}.</h2>
-        <table>
+        <table width="100%">
         	<tr bgcolor="#0099FF" border=1>
-        		<td><strong>Artista</strong></td>
+        		<td width="30%"><strong>Artista</strong></td>
         		<td><strong>Album</strong></td>
         		<td><strong>Ano de lançamento</strong></td>
         	</tr>
 			{% for album in albuns %}
 				<tr bgcolor="{% cycle '#5c8ea7' '#a8ffea' %}">
 					<td>{{ album.artist }}</td>
-					<td><a href="{% url listar_songs album.id %}">{{ album.name }}</a></td>
+					<td><a href="#" id="{{ album.id }}" name="{% url listar_songs album.id %}">{{ album.name }}</a></td>
 					<td>{{ album.year }}</td>
 				</tr>
-				<div id="album{{ album.id }}">
-				</div>
+				<tr>
+					<td width="30%">
+						<div id="album{{ album.id }}">
+						</div>
+					</td>
+				</tr>
 			{% endfor %}
 		</table>
 
@@ -22,3 +26,26 @@
 		<h1>Nenhum album cadastrado</h1>
 	{% endif %}
 </body>
+<script type="text/javascript" src="{{ STATIC_URL }}js/jquery.js"></script>
+<script type="text/javascript">
+	$(document).ready(function(){
+		$("div").hide();
+		$("a").click(function(){
+			var album_id = this.id;
+			var link = this.name;
+			$("#album" + album_id).toggle('slow', function(){
+				$("#album" + album_id).html("<strong>Buscando músicas...</strong>");
+				$.ajax({
+					url: link,
+					//beforeSend: function(){
+					//	$("#album" + album_id).html("<strong>Buscando músicas...</strong>");
+					//},
+					success: function(data){
+						$("#album" + album_id).html(data);
+					}
+				});
+			});
+			return false;
+		});
+	});
+</script>
