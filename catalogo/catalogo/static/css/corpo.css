@@ -1,0 +1,30 @@
+#header
+{
+	background-color: #666;
+	margin-bottom: 10px;
+}
+
+#nav
+{
+	float: left;
+	width: 25%;
+	background-color: #999;
+	margin-bottom: 10px;
+}
+
+#content
+{
+	float: left;
+	margin-left: 5%;
+	width: 65%;
+	background-color: #999;
+	margin-bottom: 10px;
+}
+
+#footer
+{
+	clear: both;
+	height: 50px;
+	background-color: #666;
+	margin-bottom: 10px;
+}

@@ -1,9 +1,36 @@
 <html>
 	<head>
 		<title>Index de músicas</title>
+		<link rel="stylesheet" type="text/css" href="{{ STATIC_URL }}css/corpo.css">
 	</head>
 	<body>
-		<h2>Bem vindo(a) a minha coleção de músicas</h2>
-		<a href="{% url listar_albuns %}">Albuns</a>
+		<div id="Header">
+			<h2>Bem vindo(a) a minha coleção de músicas</h2>
+			<a href="{% url listar_albuns %}">Albuns</a>
+		</div>
+		<div id="nav"></div>
+		<div id="content">teste</div>
+		<div id="footer">Rodapé</div>
 	</body>
 </html>
+<script type="text/javascript" src="{{ STATIC_URL }}js/jquery.js"></script>
+<script type="text/javascript">
+	$(document).ready(function(){
+		$("a").click(function(){
+			var link = this;
+			$("#content").hide();
+			$.ajax({
+				url: link,
+				cache: false,
+				beforeSend: function(){
+					$("#nav").html("<strong>Buscando músicas...</strong>");
+				},
+				success: function(data){
+					$("#nav").html(data);
+				}
+			});
+			$("#nav").fadeIn('slow');
+			return false;
+		});
+	});
+</script>
