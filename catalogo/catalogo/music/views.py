@@ -12,8 +12,13 @@ from django.forms.models import inlineformset_factory
 def index(request):
 	return render(request, 'music/index.html')
 
-def listar_albuns(request):
-	albuns = Album.objects.all()
+def listar_artists(request):
+	artists = Artist.objects.all()
+	vars_template = {'artists': artists}
+	return render(request, 'music/artists.html', vars_template)
+
+def listar_albuns(request, artist_id):
+	albuns = Album.objects.filter(artist_id = artist_id).order_by('year')
 	vars_template = {'albuns': albuns}
 	return render(request, 'music/albuns.html', vars_template)
 

@@ -1,36 +1,41 @@
+{% load static %}
 <html>
 	<head>
+		{% block cabecalho %}
 		<title>Index de músicas</title>
-		<link rel="stylesheet" type="text/css" href="{{ STATIC_URL }}css/corpo.css">
+		{% endblock cabecalho %}
+		<link rel="stylesheet" type="text/css" href="{% static 'css/corpo.css' %}">
 	</head>
 	<body>
 		<div id="Header">
 			<h2>Bem vindo(a) a minha coleção de músicas</h2>
-			<a href="{% url listar_albuns %}">Albuns</a>
+			<a href="{% url listar_artists %}">Artistas</a>
 		</div>
 		<div id="nav"></div>
 		<div id="content">teste</div>
 		<div id="footer">Rodapé</div>
 	</body>
 </html>
-<script type="text/javascript" src="{{ STATIC_URL }}js/jquery.js"></script>
+<script type="text/javascript" src="{% static 'js/jquery.js' %}"></script>
+{% block script %}
 <script type="text/javascript">
 	$(document).ready(function(){
 		$("a").click(function(){
 			var link = this;
-			$("#content").hide();
 			$.ajax({
 				url: link,
 				cache: false,
 				beforeSend: function(){
-					$("#nav").html("<strong>Buscando músicas...</strong>");
+					$("#nav").html("<strong>Buscando artistas...</strong>");
 				},
 				success: function(data){
 					$("#nav").html(data);
 				}
 			});
+			$("#nav").hide();
 			$("#nav").fadeIn('slow');
 			return false;
 		});
 	});
 </script>
+{% endblock script %}
