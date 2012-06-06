@@ -10,6 +10,7 @@
 	width: 25%;
 	background-color: #999;
 	margin-bottom: 10px;
+	list-style-type: none;
 }
 
 #content
@@ -19,6 +20,7 @@
 	width: 65%;
 	background-color: #999;
 	margin-bottom: 10px;
+	list-style-type: none;
 }
 
 #footer

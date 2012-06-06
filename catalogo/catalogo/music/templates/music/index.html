@@ -9,7 +9,7 @@
 	<body>
 		<div id="Header">
 			<h2>Bem vindo(a) a minha coleção de músicas</h2>
-			<a href="{% url listar_artists %}">Artistas</a>
+			<a href="#" name="{% url listar_artists %}">Artistas</a>
 		</div>
 		<div id="nav"></div>
 		<div id="content">teste</div>
@@ -21,7 +21,7 @@
 <script type="text/javascript">
 	$(document).ready(function(){
 		$("a").click(function(){
-			var link = this;
+			var link = this.name;
 			$.ajax({
 				url: link,
 				cache: false,
@@ -32,8 +32,8 @@
 					$("#nav").html(data);
 				}
 			});
-			$("#nav").hide();
-			$("#nav").fadeIn('slow');
+//			$("#nav").hide();
+//			$("#nav").fadeIn('slow');
 			return false;
 		});
 	});

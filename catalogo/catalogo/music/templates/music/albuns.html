@@ -1,18 +1,17 @@
-<div style="float:left;position:relative; margin-left: 0px" width="10%">
-	{% if albuns %}
-		<ul>
-			{% for album in albuns %}
-				<li style="list-style-type: none"><a href="#" id="{{ album.id }}" name="{% url listar_songs album.id %}">{{ album.name }}</a></li>
-			{% endfor %}
-		</ul>
-	{% else %}
-		<h1>Nenhum album cadastrado</h1>
-	{% endif %}
-</div>
+{% if albuns %}
+	<ul>
+		{% for album in albuns %}
+			<li><a href="#" id="{{ album.id }}" name="{% url listar_songs album.id %}">{{ album.name }}</a></li>
+		{% endfor %}
+	</ul>
+{% else %}
+	<h1>Nenhum album cadastrado</h1>
+{% endif %}
+
+{% block script %}
 <script type="text/javascript">
 	$(document).ready(function(){
 		$("a").click(function(){
-			var album_id = this.id;
 			var link = this.name;
 			$.ajax({
 				url: link,
@@ -30,3 +29,4 @@
 		});
 	});
 </script>
+{% endblock script %}
