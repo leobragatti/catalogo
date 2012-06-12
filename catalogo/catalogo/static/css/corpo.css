@@ -4,12 +4,25 @@
 	margin-bottom: 10px;
 }
 
+
+.border-radius (@radius: 5px) {
+	-webkit-border-radius: @radius;
+	-moz-border-radius: @radius;
+	border-radius: @radius;
+}
+ 
+/* Implementation */
+#somediv {
+	.border-radius(20px);
+}
+
 #nav
 {
 	float: left;
 	width: 25%;
 	background-color: #999;
 	margin-bottom: 10px;
+	.border-radius(20px);
 }
 
 ul{
