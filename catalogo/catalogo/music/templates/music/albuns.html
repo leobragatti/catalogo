@@ -1,32 +1,33 @@
 {% if albuns %}
 	<ul>
 		{% for album in albuns %}
-			<li><a href="#" id="{{ album.id }}" name="{% url listar_songs album.id %}">{{ album.name }}</a></li>
+			<li>
+				<a class="album" href="#" id="{{ album.id }}" name="{% url listar_songs album.id %}">
+					{{ album.year }} - <strong>{{ album.name }}</strong>
+				</a>
+			</li>
 		{% endfor %}
 	</ul>
 {% else %}
 	<h1>Nenhum album cadastrado</h1>
 {% endif %}
 
-{% block script %}
 <script type="text/javascript">
 	$(document).ready(function(){
-		$("a").click(function(){
+		$("#nav a.album").live("click", function(){
 			var link = this.name;
 			$.ajax({
 				url: link,
 				cache: false,
 				beforeSend: function(){
-					$("#content").html("<strong>Buscando músicas...</strong>");
+					$("#post").html("<strong>Buscando músicas...</strong>");
 				},
 				success: function(data){
-					$("#content").html(data);
+					$("#post").html(data);
 				}
 			});
-			$("#content").hide();
-			$("#content").fadeIn('slow');
-			return false;
+			$("#post").hide();
+			$("#post").fadeIn('slow');
 		});
 	});
 </script>
-{% endblock script %}

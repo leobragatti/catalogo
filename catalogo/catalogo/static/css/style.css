@@ -30,7 +30,7 @@ h2 {
 }
 
 h3 {
-	font-size: 1.6em;
+	font-size: 2em;
 }
 
 p, ul, ol {
@@ -50,7 +50,7 @@ a:hover {
 }
 
 #wrapper {
-	width: 960px;
+	width:  960px;
 	margin: 0 auto;
 	padding: 0;
 }
@@ -302,13 +302,13 @@ a:hover {
 
 #sidebar li ul {
 	margin: 0px 0px;
-	padding-bottom: 30px;
+	padding-bottom: 0px;
 }
 
 #sidebar li li {
-	line-height: 35px;
+	line-height: 30px;
 	border-bottom: 1px dotted #292929;
-	margin: 0px 30px;
+	margin: 0px 0px;
 	border-right: none;
 }
 

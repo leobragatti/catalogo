@@ -1,32 +1,34 @@
 {% if artists %}
 	<ul>
 		{% for artist in artists %}
-			<li><a href="#" id="{{ artist.id }}" name="{% url listar_albuns artist.id %}">{{ artist.name }}</a></li>
+			<li>
+				<h2><a class="artist" href="#" id="artist{{ artist.id }}" name="{% url listar_albuns artist.id %}">{{ artist.name }}</a></h2>
+				<ul id="artist{{ artist.id }}_list"></ul>
+			</li>
 		{% endfor %}
 	</ul>
 {% else %}
 	<h1>Nenhum artista cadastrado</h1>
 {% endif %}
 
-{% block script %}
 <script type="text/javascript">
 	$(document).ready(function(){
-		$("a").click(function(){
+		$("#nav a.artist").live("click", function(){
 			var link = this.name;
+			var id = "#" + this.id;
 			$.ajax({
 				url: link,
 				cache: false,
 				beforeSend: function(){
-					$("#content").html("<strong>Buscando albuns...</strong>");
+					$(id + "_list").html("<strong>Buscando albuns...</strong>");
 				},
 				success: function(data){
-					$("#content").html(data);
+					$(id + "_list").html(data);
 				}
 			});
-			$("#content").hide();
-			$("#content").fadeIn('slow');
+			$(id + "_list").hide();
+			$(id + "_list").fadeIn('slow');
 			return false;
 		});
 	});
 </script>
-{% endblock script %}
