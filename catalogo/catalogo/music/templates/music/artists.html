@@ -1,15 +1,23 @@
-{% if artists %}
-	<ul>
-		{% for artist in artists %}
-			<li>
-				<h2><a class="artist" href="#" id="artist{{ artist.id }}" name="{% url listar_albuns artist.id %}">{{ artist.name }}</a></h2>
-				<ul id="artist{{ artist.id }}_list"></ul>
-			</li>
-		{% endfor %}
-	</ul>
-{% else %}
-	<h1>Nenhum artista cadastrado</h1>
-{% endif %}
+<ul>
+	<div align="right">
+		<a href="#" id="addArtist">Add</a>
+		<ul id="artistAdd_list"></ul>
+	</div>
+	{% if artists %}
+			{% for artist in artists %}
+				<li>
+					<h2>
+						<a class="artist" href="#" id="artist{{ artist.id }}" name="{% url list_albuns artist.id %}">{{ artist.name }}</a>	
+						<a href="#">E</a>
+					</h2>
+					<ul id="artist{{ artist.id }}_list"></ul>
+				</li>
+			{% endfor %}
+		
+	{% else %}
+		<h1>Nenhum artista cadastrado</h1>
+	{% endif %}
+</ul>
 
 <script type="text/javascript">
 	$(document).ready(function(){
@@ -28,6 +36,22 @@
 			});
 			$(id + "_list").hide();
 			$(id + "_list").fadeIn('slow');
+			return false;
+		});
+
+		$("#addArtist").live("click", function(){
+			$.ajax({
+				url: "{% url save_artist 0 %}",
+				cache: false,
+				beforeSend: function(){
+					$("#artistAdd_list").html("<strong>Carregando</strong>");
+				},
+				success: function(data){
+					$("#artistAdd_list").html(data);
+				}
+			});
+			$("#artistAdd_list").hide();
+			$("#artistAdd_list").fadeIn('slow');
 			return false;
 		});
 	});

@@ -1,0 +1,30 @@
+{% if erros %}
+	<li>{{ erros }}</li>
+    {% for erro in erros %}
+    <li>{{ erros }}</li>
+    {% endfor %}
+{% endif %}
+
+<form action="{% url save_artist artist_id %}" id="saveArtist">
+	{% csrf_token %}
+	{% for field in formulario %}
+		<li>{{ field }}</li>
+	{% endfor %}
+
+	<input type="hidden" id="artist_info" value="{{ artist_id }}" name="{% url save_artist artist_id %}" />
+	<input type="submit" value="Save" />
+</form>
+
+<script type="text/javascript">
+	$(document).ready(function(){
+		$('#saveArtist').submit(function(event){
+			event.preventDefault();
+			var link = $('#artist_info').attr('name');
+			$.post(this.action, {saveArtist-name:'123TEste'}, function(data){
+				alert(data);
+				return false;
+			});
+			return false;
+		});
+	});
+</script>

@@ -317,6 +317,10 @@ a:hover {
 	background: url(images/img03.gif) no-repeat left 5px;
 }
 
+#sidebar a.artist{
+	color: #0078FF;
+}
+
 #sidebar li li span {
 	display: block;
 	margin-top: -20px;
@@ -326,11 +330,11 @@ a:hover {
 }
 
 #sidebar h2 {
-	padding-left: 30px;
+	padding-left: 5px;
 	padding-top: 6px;
 	padding-bottom: 6px;
 	background: #292929;
-	letter-spacing: -.5px;
+	/* letter-spacing: -.5px; */
 	font-size: 1.8em;
 	color: #FFFFFF;
 }
@@ -349,6 +353,10 @@ a:hover {
 #sidebar a:hover {
 	text-decoration: underline;
 	color: #6E6E6E;
+}
+
+#sidebar a.artist:hover{
+	color: #0042AA;
 }
 
 /* Calendar */

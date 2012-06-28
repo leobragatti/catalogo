@@ -2,13 +2,20 @@
 
 from django.conf.urls import patterns, include, url
 
-from .views import listar_artists, listar_albuns, listar_songs, index
+from .views import list_artists, save_artist, list_albuns, list_songs, index
 
 urlpatterns = patterns('',
 
-	url(r'^artists/', listar_artists, name='listar_artists'),
-    url(r'^albuns/(\d+)', listar_albuns, name='listar_albuns'),
-    url(r'^songs/(\d+)', listar_songs, name='listar_songs'),
+	# Artist
+	url(r'^artists/save/(\d+)', save_artist, name='save_artist'),
+	url(r'^artists/', list_artists, name='list_artists'),
+
+	# Album
+    url(r'^albuns/(\d+)', list_albuns, name='list_albuns'),
+
+    # Song
+    url(r'^songs/(\d+)', list_songs, name='list_songs'),
+
 	url(r'', index, name='pagina_inicial'),
 
 )
