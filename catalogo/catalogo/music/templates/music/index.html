@@ -92,7 +92,7 @@ dark color scheme. Version    : 1.0 Released   : 20120325
 <!-- end #footer -->
 </body>
 </html>
-
+{% block script %}
 <script type="text/javascript">
 	$(document).ready(function(){
 		$("#artists").click(function(){
@@ -114,3 +114,4 @@ dark color scheme. Version    : 1.0 Released   : 20120325
 		});
 	});
 </script>
+{% endblock script %}

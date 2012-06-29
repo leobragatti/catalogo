@@ -6,7 +6,7 @@ from .models import Artist, Album, Song
 from .forms import ArtistModelForm
 
 from django.shortcuts import render, get_object_or_404
-from django.http import HttpResponseRedirect
+from django.http import HttpResponseRedirect, HttpResponse
 from django.core.urlresolvers import reverse
 from django.forms.models import inlineformset_factory
 
@@ -29,14 +29,17 @@ def list_songs(request, album_id):
 	return render(request, 'music/songs.html', vars_template)
 
 def save_artist(request, artist_id):
+	import pdb; pdb.set_trace()
 	if request.method == 'POST':
 		formulario = ArtistModelForm(request.POST)
+		print request.POST
 		if formulario.is_valid():
 			formulario.save()
-			return render(request, 'music/artists.html', vars_template)
+			return HttpResponse('Gravado com sucesso')
 		else:
-			return render(request, 'music/editar_artist.html', {'erros': formulario.errors})
-
-	formulario = ArtistModelForm(prefix="saveArtist", auto_id='%s', label_suffix=' ->')
-	vars_template = {'formulario': formulario, 'artist_id': artist_id}
-	return render(request, 'music/editar_artist.html', vars_template)
+			return HttpResponse(formulario['name'].errors)
+		assert False
+	else:
+		formulario = ArtistModelForm(prefix="saveArtist", auto_id='%s')
+		vars_template = {'formulario': formulario, 'artist_id': artist_id}
+		return render(request, 'music/editar_artist.html', vars_template)
