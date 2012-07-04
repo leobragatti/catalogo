@@ -5,33 +5,47 @@
     {% endfor %}
 {% endif %}
 
-<form action="" id="saveArtist" method="post">
+<form id="artistForm" method="POST">
 	{% csrf_token %}
 	{% for field in formulario %}
 		<li>{{ field }}</li>
 	{% endfor %}
-
-	<input type="hidden" id="artist_info" value="{{ artist_id }}" name="{% url save_artist artist_id %}" />
-	<input type="submit" value="Save" />
 </form>
+
+<input type="hidden" id="artist_info" value="{{ artist_id }}" name="{% url save_artist artist_id %}" />
+<input type="submit" value="Save" id="saveArtist" />
 
 {% block script %}
 <script type="text/javascript">
+	
+	function getCookie(name) {
+        var cookieValue = null;
+        if (document.cookie && document.cookie != '') {
+            var cookies = document.cookie.split(';');
+            for (var i = 0; i < cookies.length; i++) {
+                var cookie = jQuery.trim(cookies[i]);
+                // Does this cookie string begin with the name we want?
+                if (cookie.substring(0, name.length + 1) == (name + '=')) {
+                    cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                    break;
+                }
+            }
+        }
+        return cookieValue;
+    }
+
 	$(document).ready(function(){
-		$('#saveArtist').submit(function(event){
-			event.preventDefault();
-
+		$('#saveArtist').click(function(){
 			var url = $("#artist_info").attr('name');
-
-			var $form = $( this ),
-        		 term = $form.find( 'input[id="saveArtist-name"]').val();
+        	var term = $("#saveArtist-name").val();
 
 			/* Send the data using post and put the results in a div */
-			$.post(url, {saveArtist-name: term}, function(data){
-				alert(data);
+			$.post(url, 
+				   {"saveArtist-name": term,
+				    "csrfmiddlewaretoken": getCookie("csrftoken")}, 
+				   function(data){
+				$("#artistAdd_list").html(data);
 			});
-
-        	alert(url);
 		});
 	});
 </script>

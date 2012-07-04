@@ -31,14 +31,12 @@ def list_songs(request, album_id):
 def save_artist(request, artist_id):
 	import pdb; pdb.set_trace()
 	if request.method == 'POST':
-		formulario = ArtistModelForm(request.POST)
-		print request.POST
+		formulario = ArtistModelForm(request.POST, prefix="saveArtist")
 		if formulario.is_valid():
 			formulario.save()
 			return HttpResponse('Gravado com sucesso')
 		else:
 			return HttpResponse(formulario['name'].errors)
-		assert False
 	else:
 		formulario = ArtistModelForm(prefix="saveArtist", auto_id='%s')
 		vars_template = {'formulario': formulario, 'artist_id': artist_id}
