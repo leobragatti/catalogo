@@ -1,16 +1,14 @@
-{% if albuns %}
-	<ul>
-		{% for album in albuns %}
-			<li>
-				<a class="album" href="#" id="{{ album.id }}" name="{% url list_songs album.id %}">
-					{{ album.year }} - <strong>{{ album.name }}</strong>
-				</a>
-			</li>
-		{% endfor %}
-	</ul>
-{% else %}
+
+<ul>
+	{% for album in albuns %}
+		<li>
+			<a class="album" href="#" id="{{ album.id }}" name="{% url list_songs album.id %}">
+				{{ album.year }} - <strong>{{ album.name }}</strong>
+			</a>
+		</li>
+	{% endfor %}
 	<a href="#">Adicionar album</a>
-{% endif %}
+</ul>
 
 <script type="text/javascript">
 	$(document).ready(function(){

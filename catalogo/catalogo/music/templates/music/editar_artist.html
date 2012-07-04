@@ -37,12 +37,11 @@
 	$(document).ready(function(){
 		$('#saveArtist').click(function(){
 			var url = $("#artist_info").attr('name');
-        	var term = $("#saveArtist-name").val();
+        	var data = $("#artistForm").serializeArray();
 
 			/* Send the data using post and put the results in a div */
 			$.post(url, 
-				   {"saveArtist-name": term,
-				    "csrfmiddlewaretoken": getCookie("csrftoken")}, 
+				   data, 
 				   function(data){
 				$("#artistAdd_list").html(data);
 			});
