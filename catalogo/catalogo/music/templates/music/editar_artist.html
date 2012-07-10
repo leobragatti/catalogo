@@ -1,14 +1,7 @@
-{% if erros %}
-	<li>{{ erros }}</li>
-    {% for erro in erros %}
-    <li>{{ erros }}</li>
-    {% endfor %}
-{% endif %}
-
 <form id="artistForm" method="POST">
 	{% csrf_token %}
 	{% for field in formulario %}
-		<li>{{ field }}</li>
+		<li>{{ field }} {{ field.errors }}</li>
 	{% endfor %}
 </form>
 
@@ -17,34 +10,16 @@
 
 {% block script %}
 <script type="text/javascript">
-	
-	function getCookie(name) {
-        var cookieValue = null;
-        if (document.cookie && document.cookie != '') {
-            var cookies = document.cookie.split(';');
-            for (var i = 0; i < cookies.length; i++) {
-                var cookie = jQuery.trim(cookies[i]);
-                // Does this cookie string begin with the name we want?
-                if (cookie.substring(0, name.length + 1) == (name + '=')) {
-                    cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
-                    break;
-                }
-            }
-        }
-        return cookieValue;
-    }
+	$('#saveArtist').click(function(){
+		var url = $("#artist_info").attr('name');
+    	var data = $("#artistForm").serializeArray();
 
-	$(document).ready(function(){
-		$('#saveArtist').click(function(){
-			var url = $("#artist_info").attr('name');
-        	var data = $("#artistForm").serializeArray();
-
-			/* Send the data using post and put the results in a div */
-			$.post(url, 
-				   data, 
-				   function(data){
-				$("#artistAdd_list").html(data);
-			});
+		/* Send the data using post and put the results in a div */
+		$.post(url, 
+			   data, 
+			   function(data){
+					$("#artistAdd_list").hide();
+					$("#artistList").append(data);
 		});
 	});
 </script>

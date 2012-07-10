@@ -14,7 +14,7 @@ def index(request):
 	return render(request, 'music/index.html')
 
 def list_artists(request):
-	artists = Artist.objects.all()
+	artists = Artist.objects.all().order_by('name')
 	vars_template = {'artists': artists}
 	return render(request, 'music/artists.html', vars_template)
 
@@ -29,14 +29,17 @@ def list_songs(request, album_id):
 	return render(request, 'music/songs.html', vars_template)
 
 def save_artist(request, artist_id):
-	import pdb; pdb.set_trace()
+	#import pdb; pdb.set_trace()
 	if request.method == 'POST':
-		formulario = ArtistModelForm(request.POST, prefix="saveArtist")
+		a = Artist()
+		formulario = ArtistModelForm(request.POST, prefix="saveArtist", instance=a)
 		if formulario.is_valid():
 			formulario.save()
-			return HttpResponse('Gravado com sucesso')
+			url = reverse('list_albuns', args=[a.id])
+			return HttpResponse('<li><h2><a class="artist" href="#" id="artist{0}" name="{1}">{2}</a></h2><ul id="artist{0}_list"></ul></li>'.format(a.id, url, a.name))
 		else:
-			return HttpResponse(formulario['name'].errors)
+			vars_template = {'formulario': formulario, 'artist_id': artist_id}
+			return render(request, 'music/editar_artist.html', vars_template)
 	else:
 		formulario = ArtistModelForm(prefix="saveArtist", auto_id='%s')
 		vars_template = {'formulario': formulario, 'artist_id': artist_id}

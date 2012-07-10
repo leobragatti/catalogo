@@ -1,4 +1,4 @@
-<ul>
+<ul id="artistList">
 	<div align="right">
 		<a href="#" id="addArtist">Add</a>
 		<ul id="artistAdd_list"></ul>
@@ -20,39 +20,37 @@
 </ul>
 
 <script type="text/javascript">
-	$(document).ready(function(){
-		$("#nav a.artist").live("click", function(){
-			var link = this.name;
-			var id = "#" + this.id;
-			$.ajax({
-				url: link,
-				cache: false,
-				beforeSend: function(){
-					$(id + "_list").html("<strong>Buscando albuns...</strong>");
-				},
-				success: function(data){
-					$(id + "_list").html(data);
-				}
-			});
-			$(id + "_list").hide();
-			$(id + "_list").fadeIn('slow');
-			return false;
+	$("body").on("click", "#nav a.artist", function(){
+		var link = this.name;
+		var id = "#" + this.id;
+		$.ajax({
+			url: link,
+			cache: false,
+			beforeSend: function(){
+				$(id + "_list").html("<strong>Buscando albuns...</strong>");
+			},
+			success: function(data){
+				$(id + "_list").html(data);
+			}
 		});
+		$(id + "_list").hide();
+		$(id + "_list").fadeIn('slow');
+		return false;
+	});
 
-		$("#addArtist").live("click", function(){
-			$.ajax({
-				url: "{% url save_artist 0 %}",
-				cache: false,
-				beforeSend: function(){
-					$("#artistAdd_list").html("<strong>Carregando</strong>");
-				},
-				success: function(data){
-					$("#artistAdd_list").html(data);
-				}
-			});
-			$("#artistAdd_list").hide();
-			$("#artistAdd_list").fadeIn('slow');
-			return false;
+	$("#addArtist").click(function(){
+		$.ajax({
+			url: "{% url save_artist 0 %}",
+			cache: false,
+			beforeSend: function(){
+				$("#artistAdd_list").html("<strong>Carregando</strong>");
+			},
+			success: function(data){
+				$("#artistAdd_list").html(data);
+			}
 		});
+		$("#artistAdd_list").hide();
+		$("#artistAdd_list").fadeIn('slow');
+		return false;
 	});
 </script>
