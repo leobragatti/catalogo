@@ -12,7 +12,7 @@
 
 <script type="text/javascript">
 	$(document).ready(function(){
-		$("#nav a.album").live("click", function(){
+		$("body").on("click", "#nav a.album", function(){
 			var link = this.name;
 			$.ajax({
 				url: link,

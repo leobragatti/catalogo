@@ -41,7 +41,7 @@ class Command(BaseCommand):
                     song = Song()
                     song.album = album
                     song.number = faixa.split('-')[0].strip()
-                    song.name = ''.join(faixa.split('-')[1].strip()).decode('utf-8')
+                    song.name = ''.join(faixa.split('-')[1].strip()).decode('utf-8')[:-4]
                     print u'Salvando a música {0} faixa de {1} do album {2}'.format(song.name, banda.name, album.name)
                     song.save()
                 

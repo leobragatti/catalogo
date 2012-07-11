@@ -29,8 +29,8 @@ def list_songs(request, album_id):
 	return render(request, 'music/songs.html', vars_template)
 
 def save_artist(request, artist_id):
-	#import pdb; pdb.set_trace()
 	if request.method == 'POST':
+		import pdb; pdb.set_trace()
 		a = Artist()
 		formulario = ArtistModelForm(request.POST, prefix="saveArtist", instance=a)
 		if formulario.is_valid():
