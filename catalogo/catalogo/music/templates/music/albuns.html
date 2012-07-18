@@ -9,23 +9,3 @@
 	{% endfor %}
 	<a href="#">Adicionar album</a>
 </ul>
-
-<script type="text/javascript">
-	$(document).ready(function(){
-		$("body").on("click", "#nav a.album", function(){
-			var link = this.name;
-			$.ajax({
-				url: link,
-				cache: false,
-				beforeSend: function(){
-					$("#post").html("<strong>Buscando músicas...</strong>");
-				},
-				success: function(data){
-					$("#post").html(data);
-				}
-			});
-			$("#post").hide();
-			$("#post").fadeIn('slow');
-		});
-	});
-</script>

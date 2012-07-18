@@ -33,7 +33,7 @@ h3 {
 	font-size: 2em;
 }
 
-p, ul, ol {
+ul, ol {
 	margin-top: 0;
 	line-height: 180%;
 }
@@ -275,7 +275,6 @@ a:hover {
 }
 
 .links {
-	padding-top: 20px;
 	font-size: 12px;
 	font-weight: bold;
 }

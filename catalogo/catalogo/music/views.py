@@ -1,26 +1,35 @@
-# Create your views here.
-
 # coding: utf-8
-
 from .models import Artist, Album, Song
 from .forms import ArtistModelForm
 
 from django.shortcuts import render, get_object_or_404
 from django.http import HttpResponseRedirect, HttpResponse
 from django.core.urlresolvers import reverse
-from django.forms.models import inlineformset_factory
+
+def artist_item(artist):
+	item = u"""<li id=\"artist{id}_header\">
+				<h2>
+					<a class=\"artist\" href=\"#\" id=\"artist{id}\" name=\"{url_albuns}\">{name}</a>	
+					<a class=\"artist-edit\" id=\"{id}\" name=\"{url_save}\" href=\"#\">E</a>
+				</h2>
+				<ul id=\"artist{id}_list\"></ul>
+			</li>"""
+	return item.format(id=artist.id, 
+					  name=artist.name,
+					  url_albuns=reverse('list_albuns', args=[artist.id]),
+					  url_save=reverse('save_artist', args=[artist.id]))
 
 def index(request):
 	return render(request, 'music/index.html')
 
 def list_artists(request):
-	artists = Artist.objects.all().order_by('name')
-	vars_template = {'artists': artists}
+	items = Artist.objects.all().order_by('name')
+	vars_template = {'artists': items}
 	return render(request, 'music/artists.html', vars_template)
 
 def list_albuns(request, artist_id):
 	albuns = Album.objects.filter(artist_id = artist_id).order_by('year')
-	vars_template = {'albuns': albuns}
+	vars_template = {'albuns': albuns, 'artist_id': artist_id}
 	return render(request, 'music/albuns.html', vars_template)
 
 def list_songs(request, album_id):
@@ -29,18 +38,23 @@ def list_songs(request, album_id):
 	return render(request, 'music/songs.html', vars_template)
 
 def save_artist(request, artist_id):
-	if request.method == 'POST':
-		import pdb; pdb.set_trace()
+	#import pdb; pdb.set_trace()
+	try:
+		a = Artist.objects.get(pk=artist_id)
+	except Artist.DoesNotExist as e:
 		a = Artist()
+
+	if request.method == 'POST':
 		formulario = ArtistModelForm(request.POST, prefix="saveArtist", instance=a)
 		if formulario.is_valid():
 			formulario.save()
 			url = reverse('list_albuns', args=[a.id])
-			return HttpResponse('<li><h2><a class="artist" href="#" id="artist{0}" name="{1}">{2}</a></h2><ul id="artist{0}_list"></ul></li>'.format(a.id, url, a.name))
+			url_save = reverse('save_artist', args=[a.id])
+			return HttpResponse(artist_item(a))
 		else:
 			vars_template = {'formulario': formulario, 'artist_id': artist_id}
 			return render(request, 'music/editar_artist.html', vars_template)
 	else:
-		formulario = ArtistModelForm(prefix="saveArtist", auto_id='%s')
+		formulario = ArtistModelForm(prefix="saveArtist", auto_id='%s', instance=a)
 		vars_template = {'formulario': formulario, 'artist_id': artist_id}
 		return render(request, 'music/editar_artist.html', vars_template)

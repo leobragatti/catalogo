@@ -1,14 +1,14 @@
+<div align="right">
+	<a href="#" id="addArtist">Add</a>
+	<ul id="artistAdd_list"></ul>
+</div>
 <ul id="artistList">
-	<div align="right">
-		<a href="#" id="addArtist">Add</a>
-		<ul id="artistAdd_list"></ul>
-	</div>
 	{% if artists %}
 			{% for artist in artists %}
-				<li>
+				<li id="artist{{ artist.id }}_header">
 					<h2>
 						<a class="artist" href="#" id="artist{{ artist.id }}" name="{% url list_albuns artist.id %}">{{ artist.name }}</a>	
-						<a href="#">E</a>
+						<a class="artist-edit" id="{{ artist.id }}" name="{% url save_artist artist.id %}" href="#">E</a>
 					</h2>
 					<ul id="artist{{ artist.id }}_list"></ul>
 				</li>
@@ -20,7 +20,7 @@
 </ul>
 
 <script type="text/javascript">
-	$("body").on("click", "#nav a.artist", function(){
+	$("#nav #artistList").on("click", "a.artist", function(){
 		var link = this.name;
 		var id = "#" + this.id;
 		$.ajax({
@@ -33,18 +33,50 @@
 				$(id + "_list").html(data);
 			}
 		});
+		$("#information").html($(this).html());
 		$(id + "_list").hide();
 		$(id + "_list").fadeIn('slow');
+		console.log(this);
 		return false;
+	});
+
+	$("#nav #artistList").on("click", "a.artist-edit", function(){
+		var link = this.name;
+		var id = "#artist" + this.id;
+		$.ajax({
+			url: link,
+			cache: false,
+			beforeSend: function(){
+				$(id + "_header").html("<strong>Carregando</strong>");
+			},
+			success: function(data){
+				$(id + "_header").html(data);
+			}
+		});
+		return false;
+	});
+
+	$("#nav #artistList").on("click", "a.album", function(){
+		var link = this.name;
+		$.ajax({
+			url: link,
+			cache: false,
+			beforeSend: function(){
+				$("#post").html("<strong>Buscando músicas...</strong>");
+			},
+			success: function(data){
+				$("#post").html(data);
+			}
+		});
+		$("#information").html(' > ' + $(this).html());
+		$("#post").hide();
+		$("#post").fadeIn('slow');
 	});
 
 	$("#addArtist").click(function(){
 		$.ajax({
 			url: "{% url save_artist 0 %}",
 			cache: false,
-			beforeSend: function(){
-				$("#artistAdd_list").html("<strong>Carregando</strong>");
-			},
 			success: function(data){
 				$("#artistAdd_list").html(data);
 			}
