@@ -1,3 +1,4 @@
+{% load static %}
 <div align="right">
 	<a href="#" id="addArtist">Add</a>
 	<ul id="artistAdd_list"></ul>
@@ -8,7 +9,8 @@
 				<li id="artist{{ artist.id }}_header">
 					<h2>
 						<a class="artist" href="#" id="artist{{ artist.id }}" name="{% url list_albuns artist.id %}">{{ artist.name }}</a>	
-						<a class="artist-edit" id="{{ artist.id }}" name="{% url save_artist artist.id %}" href="#">E</a>
+						<a class="artist-edit" id="{{ artist.id }}" name="{% url save_artist artist.id %}" href="#"><img src="{% static 'images/edit.png' %}"</img></a>
+						<a class="artist-remove" id="{{ artist.id }}" name="{% url remove_artist artist.id %}" href="#"><img src="{% static 'images/delete.png' %}"</img></a>
 					</h2>
 					<ul id="artist{{ artist.id }}_list"></ul>
 				</li>
@@ -36,7 +38,6 @@
 		$("#information").html($(this).html());
 		$(id + "_list").hide();
 		$(id + "_list").fadeIn('slow');
-		console.log(this);
 		return false;
 	});
 
@@ -71,6 +72,24 @@
 		$("#information").html(' > ' + $(this).html());
 		$("#post").hide();
 		$("#post").fadeIn('slow');
+	});
+
+	$("#nav #artistList").on("click", "a.artist-remove", function(){
+		var link = this.name;
+		var id = "#artist" + this.id;
+		
+		$.ajax({
+			url: link,
+			cache: false,
+			beforeSend: function(){
+				$(id + "_header").html("<strong>Carregando</strong>");
+			},
+			success: function(data){
+				$(id + "_header").html(data);
+			}
+		});
+
+		return false;
 	});
 
 	$("#addArtist").click(function(){

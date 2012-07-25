@@ -4,20 +4,24 @@ from .forms import ArtistModelForm
 
 from django.shortcuts import render, get_object_or_404
 from django.http import HttpResponseRedirect, HttpResponse
+from django.conf import settings
 from django.core.urlresolvers import reverse
 
 def artist_item(artist):
 	item = u"""<li id=\"artist{id}_header\">
 				<h2>
 					<a class=\"artist\" href=\"#\" id=\"artist{id}\" name=\"{url_albuns}\">{name}</a>	
-					<a class=\"artist-edit\" id=\"{id}\" name=\"{url_save}\" href=\"#\">E</a>
+					<a class=\"artist-edit\" id=\"{id}\" name=\"{url_save}\" href=\"#\"><img src="{static}images/edit.png"</img></a>
+					<a class=\"artist-remove\" id=\"{id}\" name=\"{url_remove}\" href=\"#\"><img src="{static}images/delete.png"</img></a>
 				</h2>
 				<ul id=\"artist{id}_list\"></ul>
 			</li>"""
 	return item.format(id=artist.id, 
 					  name=artist.name,
 					  url_albuns=reverse('list_albuns', args=[artist.id]),
-					  url_save=reverse('save_artist', args=[artist.id]))
+					  url_save=reverse('save_artist', args=[artist.id]),
+					  url_remove=reverse('remove_artist', args=[artist.id]),
+					  static=settings.STATIC_URL)
 
 def index(request):
 	return render(request, 'music/index.html')
@@ -58,3 +62,11 @@ def save_artist(request, artist_id):
 		formulario = ArtistModelForm(prefix="saveArtist", auto_id='%s', instance=a)
 		vars_template = {'formulario': formulario, 'artist_id': artist_id}
 		return render(request, 'music/editar_artist.html', vars_template)
+
+def remove_artist(request, artist_id):
+	try:
+		print request.POST
+		a = Artist.objects.get(pk=artist_id)
+	except Artist.DoesNotExist as e:
+		a = Artist()
+	return render(request, 'music/remove_artist.html', {'artist_id': artist_id})
