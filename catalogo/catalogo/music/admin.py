@@ -17,6 +17,8 @@ class AlbumAdmin(admin.ModelAdmin):
     inlines = [
         SongInline,
     ]
+    list_filter = ['year']
+    search_fields = ['name']
 
 class ArtistAdmin(admin.ModelAdmin):
 	inlines = [
