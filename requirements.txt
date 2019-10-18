@@ -1,4 +1,4 @@
-Django==1.4
+Django==1.11.23
 Mako==0.7.0
 MarkupSafe==0.15
 Nikola==3.1
